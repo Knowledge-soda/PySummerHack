@@ -1,0 +1,30 @@
+game:Game name
+author:Author's Pyweek username
+link:https://github.com/Author/Game-name
+1st round hack:somebody
+3rd round hack:hacker
+4th rounb hack:banana
+
+game:Other game name
+author:somebody
+link:https://github.com/somebody/Other
+1st round hack:banana
+2rd round hack:Author
+4th round hack:hacker
+
+hacked from:Original PyWeek game
+original game link:https://pyweek.org/e/someteamname
+author:hacker
+link:https://github.com/hacker/gamename
+1st round hack:Author
+2nd round hack:banana
+3rd round hack:somebody
+
+game:Fruit
+author:banana
+link:https://github.com/banana/Fruit
+1st round hack:hacker
+2nd round hack:john
+3rd round hack:Author
+4th round hack:somebody
+

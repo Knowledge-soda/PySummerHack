@@ -1,0 +1,9 @@
+Game name
+fun:2
+production:3
+innovation:1
+comment:your comment about game
+fun:4
+production:2
+innovation:2
+comment:another comment about game
