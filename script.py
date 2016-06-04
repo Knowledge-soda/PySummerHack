@@ -8,7 +8,7 @@ def text_dict(text, counter):
     return (res, counter)
 
 
-class GameList:
+class Game_list:
     rounds = ["1st round hack", "2nd round hack", "3rd round hack",
               "4th round hack"]
     game_attr = ["game", "author", "link"]
@@ -78,3 +78,99 @@ class GameList:
         else:
             return 1  # you can't hack game which doesn't exist
         game[self.rounds[round_ - 1]] = author
+
+    def list_games(self):
+        for game in self.games:
+            if game["hacked from PyWeek"]:
+                print(game["hacked from"])
+            else:
+                print(game["game"])
+
+    def list_available(self, round_):
+        round_ = self.rounds[round_ - 1]
+        for game in self.games:
+            if round_ in game:
+                if game["hacked from PyWeek"]:
+                    print(game["hacked from"])
+                else:
+                    print(game["game"])                
+
+    def describe(self, game_name):
+        for game in self.games:
+            if game["hacked from PyWeek"]:
+                if game["hacked from"] == game_name:
+                    break
+            elif game["game"] == game_name:
+                break
+        else:
+            return "Game with name {} doesn't exist!".format(game_name)
+        hackers = ", ".join(game[r] for r in self.rounds if r in game)
+        if game["hacked from PyWeek"]:
+            if hackers:
+                return "Game {} is on {}, original game hack by {} is on"\
+                       " {} and was later hacked by {}.".format(
+                           game["hacked from"], game["original game link"],
+                           game["author"], game["link"], hackers)
+            else:
+                return "Game {} is on {}, original game hack by {} is on "\
+                       "{}.".format(game["hacked from"],
+                                    game["original game link"],
+                                    game["author"],
+                                    game["link"])
+        else:
+            if hackers:
+                return "Game {} is made by {}, is on {} and was hacked by"\
+                       " {}.".format(game["game"], game["author"],
+                                     game["link"], hackers)
+            else:
+                return "Game {} is made by {} and is on {}.".format(
+                    game["game"], game["author"], game["link"])
+
+
+def shell(path="game_list.txt"):
+    game_list = Game_list(path)
+    print("Welcome to PySummerHack shell!")
+    while True:
+        command = input().split()
+        if command[0].lower() in ("quit", "q"):
+            break
+        if command[0].lower() in ("help", "h"):
+            print("quit/q - quits the shell")
+            print("help/h - prints this message")
+            print("save/s - save all changes")
+            print("list/ls - list all games")
+            print("list/ls available/av n - list all games not hacked on nth round")
+            print("add/a game/g - adds game")
+            print("add/a hacked/hacked_game/hg - adds hacked game")
+            print("add/a hack/h - adds hack to some game")
+        if command[0].lower() in ("list", "ls"):
+            if len(command) > 1 and command[1].lower() in ("available",
+                                                          "av"):
+                game_list.list_available(int(command[2]))
+            else:
+                game_list.list_games()
+        if command[0].lower() in ("save", "s"):
+            game_list.save()
+        if command[0].lower() in ("add", "a"):
+            if command[1].lower() in ("g", "game"):
+                name = input("name:")
+                author = input("author:")
+                link = input("link:")
+                if game_list.add_game(name, author, link):
+                    print("Name already used!")
+            if command[1].lower() in ("hacked", "hacked_game", "hg"):
+                name = input("original game name:")
+                orig_link = input("original link:")
+                author = input("author:")
+                link = input("link:")
+                if game_list.add_game(name, orig_link, author, link):
+                    print("Name already used!")
+            if command[1].lower() in ("hack", "h"):
+                name = input("game name:")
+                author = input("author:")
+                round_ = int(input("round:"))
+                if game_list.add_hack(name, author, round_):
+                    print("Game with name {} doesn't exist!".format(name))
+
+if __name__ == "__main__":
+    shell()

@@ -1,0 +1,4 @@
+game:Chess Invaders
+author:knowledge
+link:https://github.com/Knowlege/Chess-Invaders
+
